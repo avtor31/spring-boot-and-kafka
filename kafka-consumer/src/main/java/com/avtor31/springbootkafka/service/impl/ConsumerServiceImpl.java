@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ConsumerServiceImpl implements ConsumerService{
@@ -13,7 +14,9 @@ public class ConsumerServiceImpl implements ConsumerService{
     private String kafkaTopic;
 
     @KafkaListener(topics = "${avtor31.kafka.topic}")
-    public void receive(ConsumerRecord<?, ?> record) {
+    @Transactional
+    public void receive(ConsumerRecord<?, ?> record) throws Exception {
         System.out.println(String.format("Topic - %s, Partition - %d, Value: %s, offset: %s", kafkaTopic, record.partition(), record.value(), record.offset()));
+        throw new Exception("some transactional exception");
     }
 }

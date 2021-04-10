@@ -1,0 +1,6 @@
+
+server:
+  port: 8081
+avtor31:
+  kafka:
+    topic: avtor31-test

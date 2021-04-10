@@ -1,19 +1,21 @@
 package com.avtor31.springbootkafka;
 
 import com.avtor31.springbootkafka.service.ProducerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class KafkaController {
 
-    @Autowired
-    private ProducerService producerService;
+    private final ProducerService producerService;
 
     @GetMapping("/send-to-kafka")
-    public String sendMessage(){
+    public ResponseEntity<Void> sendMessage(){
         producerService.send();
-        return "success";
+        return ResponseEntity.ok().build();
     }
 }
